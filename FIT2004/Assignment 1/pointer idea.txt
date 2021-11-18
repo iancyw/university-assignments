@@ -1,0 +1,15 @@
+og_pointer = 0
+    ro_pointer = 0
+    while og_pointer < len(string_list):
+        if string_list[og_pointer] == rotated_strings[ro_pointer]:
+            output.append(string_list[og_pointer])
+            og_pointer += 1
+            ro_pointer = 0
+        else:
+            if ro_pointer < len(string_list) - 1:
+                ro_pointer += 1
+            else:
+                og_pointer += 1
+                ro_pointer = 0
+
+string_list = ['qwertyui','wertyuiq','rtyuiqwe','asdfgh','dfghas']

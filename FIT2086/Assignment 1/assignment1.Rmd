@@ -1,0 +1,73 @@
+---
+title: "assignment1"
+author: "IanWong"
+date: "20/08/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+```{r}
+pois_estimates <- function(X)
+{
+  n = nrow(X)
+  
+  retval = list()
+  
+  # Calculate the sample mean
+  retval$lambda_ml = sum(X)/n
+  
+  return(retval)
+}
+
+covid19 <- read_csv("covid.19.recovery.csv")
+est <- pois_estimates(covid19)
+est$lambda_ml
+```
+
+```{r}
+# Pr(X > 13) (at least 14 days)
+1 - ppois(13, est$lambda_ml)
+```
+```{r}
+predicted_covid_days <- tibble(days = rep(1:100),
+              pr = dpois(days, est$lambda_ml))
+sorted <- covid_days[order(-covid_days$pr),]
+sorted
+```
+
+```{r}
+#Pr(X < 13) (before 13 days)
+p <- ppois(13, est$lambda_ml)
+p
+```
+
+```{r}
+# Pr(X > 1) (at least 2 out of 5 have recovered)
+1 - pbinom(1, 5, p)
+```
+
+```{r}
+a <- as.data.frame(table(covid19))
+names(a)[1] <- "days"
+names(a)[2] <- "pr"
+a <- a %>%
+  mutate(pr = pr/2586)
+```
+
+
+```{r}
+plot(x=a$days, y=a$pr, ylim=c(0,0.1), xlim=c(0,50), 
+     ylab="Pr(recovery)", xlab="Days")
+lines(a, col="red")
+lines(predicted_covid_days)
+```
+
+
+
+
+
+

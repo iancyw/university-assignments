@@ -1,0 +1,47 @@
+---
+title: "assignment3"
+author: "Ian Wong"
+date: "02/10/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+```
+
+```{r}
+aus_timestamps <- read_csv("australia-timestamps.csv", col_names=FALSE)
+```
+
+```{r}
+date <- strptime(aus_timestamps$X1, "%a %b %d %Y")
+date <- as.data.frame(date) %>%
+  table() %>%
+  as.data.frame()
+```
+
+```{r}
+plot(x=date$., y=date$Freq, xlab="Date", ylab="Frequency")
+lines(x=date$., y=date$Freq)
+title("Number of tweets containing the word 'Australia' by date")
+```
+```{r}
+library(e1071)
+```
+
+```{r}
+data <- read_csv("FIT1043_Dataset.csv", col_names = FALSE)
+```
+
+```{r}
+ind <- sample(2, nrow(data), replace = T, prob = c(0.7, 0.3))
+train <- data[ind == 1,]
+test <- data[ind == 2,]
+```
+
+
+
