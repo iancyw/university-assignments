@@ -1,2 +1,2 @@
 # university-assignments
-Assignments from Monash University 2019-2022
+Assignments done over the course of my Bachelor Degree of Commerce and Computer Science
